@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinícola & Sabores - Loja Premium</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- VARIÁVEIS DE CORES & CONFIGURAÇÕES GERAIS --- */
+        :root {
+            --bordo: #58181F;       
+            --bordo-claro: #7a222c;
+            --bordo-escuro-footer: #2c1e1c; /* Nova cor para o footer */
+            --dourado: #D4AF37;     
+            --preto: #121212;
+            --branco: #ffffff;
+            --cinza-claro: #f4f4f4;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--branco);
+            color: var(--preto);
+            line-height: 1.6;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+
+        /* --- HEADER & NAV --- */
+        header {
+            background-color: var(--branco);
+            padding: 1rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            width: 3rem;
+            height: 3rem;
+            transform: scale(2);
+            object-fit: contain;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a:hover {
+            color: var(--dourado);
+        }
+
+        /* --- HERO SECTION (BANNER) --- */
+        .hero {
+            height: 80vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--branco);
+            padding: 0 20px;
+            margin-top: 60px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 2rem;
+            animation: fadeUp 1.2s ease;
+        }
+
+        .btn-cta {
+            padding: 12px 30px;
+            background-color: var(--dourado);
+            color: var(--preto);
+            font-weight: bold;
+            border-radius: 50px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            border: 2px solid var(--dourado);
+            animation: fadeUp 1.4s ease;
+        }
+
+        .btn-cta:hover {
+            background-color: transparent;
+            color: var(--dourado);
+        }
+
+        /* --- FILTROS --- */
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 3rem 5% 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 1px solid var(--bordo);
+            color: var(--bordo);
+            padding: 8px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Lato', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--bordo);
+            color: var(--branco);
+        }
+
+        /* --- GRID DE PRODUTOS --- */
+        .products-section {
+            padding: 2rem 5% 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            color: var(--preto);
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background-color: var(--dourado);
+            margin: 10px auto 0;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            transition: all 0.5s ease;
+        }
+
+        .product-card {
+            background: var(--branco);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            border: 1px solid #eee;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .product-card.visible { opacity: 1; transform: translateY(0); }
+        .hidden-card { display: none; }
+        .fade-in-entry { animation: fadeInCard 0.8s forwards; }
+
+        @keyframes fadeInCard {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .product-card:hover { transform: translateY(-10px); box-shadow: var(--shadow); }
+
+        .card-img {
+            height: 250px;
+            width: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .product-card:hover .card-img { transform: scale(1.05); }
+
+        .card-info { padding: 20px; text-align: center; }
+        .card-cat { font-size: 0.8rem; color: var(--dourado); text-transform: uppercase; letter-spacing: 1px; font-weight: bold; }
+        .card-title { font-size: 1.4rem; margin: 10px 0; color: var(--bordo); }
+        .card-desc { font-size: 0.9rem; color: #666; margin-bottom: 15px; }
+        .card-price { font-size: 1.2rem; font-weight: bold; color: var(--preto); margin-bottom: 15px; display: block; }
+
+        .btn-buy {
+            display: inline-block;
+            background-color: var(--bordo);
+            color: var(--branco);
+            padding: 10px 25px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            width: 100%;
+        }
+
+        .btn-buy:hover { background-color: var(--bordo-claro); }
+
+        .view-more-container { text-align: center; margin-top: 40px; }
+        .btn-view-more {
+            background-color: transparent;
+            color: var(--preto);
+            border: 1px solid var(--preto);
+            padding: 10px 40px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 0;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+        }
+        .btn-view-more:hover { background-color: var(--preto); color: var(--branco); }
+
+        /* --- SOBRE NÓS (Estilo Atualizado) --- */
+        .about-section {
+            background-color: var(--cinza-claro);
+            padding: 5rem 5%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 2rem;
+        }
+
+        .about-text { flex: 1; max-width: 600px; }
+        .about-text h2 { font-size: 2.5rem; color: var(--bordo); margin-bottom: 1.5rem; }
+        .about-text p { font-size: 1.1rem; color: #555; margin-bottom: 1.5rem; text-align: justify; }
+
+        /* Botão estilizado para "Ver Sobre Nós Completo" */
+        .btn-about-link {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 12px 35px;
+            border: 1px solid var(--bordo);
+            color: var(--bordo);
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            border-radius: 5px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-about-link:hover {
+            background-color: var(--bordo);
+            color: var(--branco);
+            box-shadow: 0 5px 15px rgba(88, 24, 31, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        /* Adicionar uma seta animada no hover */
+        .btn-about-link::after {
+            content: '→';
+            margin-left: 10px;
+            opacity: 0;
+            transition: opacity 0.3s, margin-left 0.3s;
+        }
+        
+        .btn-about-link:hover::after {
+            opacity: 1;
+            margin-left: 15px;
+        }
+
+        .about-img {
+            flex: 1;
+            max-width: 500px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .about-img img { width: 100%; height: auto; transition: transform 0.5s; }
+        .about-img:hover img { transform: scale(1.02); }
+
+        /* --- FOOTER COMPLETO (Novo estilo importado do sobre.html) --- */
+        footer {
+            background-color: var(--bordo-escuro-footer);
+            color: #ddd;
+            padding: 4rem 5% 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1.5fr;
+            gap: 50px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 3rem;
+            margin-bottom: 2rem;
+            text-align: left; /* Garante alinhamento à esquerda */
+        }
+
+        .footer-col h3 { color: var(--dourado); margin-bottom: 1.5rem; font-size: 1.5rem; }
+        .footer-col p { margin-bottom: 10px; font-size: 0.95rem; }
+
+        .social-icons a {
+            color: var(--dourado);
+            border: 1px solid var(--dourado);
+            width: 40px; 
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+        
+        .social-icons a:hover { background: var(--dourado); color: var(--bordo-escuro-footer); }
+
+        .newsletter-form input {
+            width: 100%;
+            padding: 12px;
+            background: transparent;
+            border: 1px solid #555;
+            color: #fff;
+            margin-bottom: 10px;
+            font-family: 'Lato';
+        }
+
+        .newsletter-form button {
+            width: 100%;
+            padding: 12px;
+            background: var(--dourado);
+            border: none;
+            color: var(--bordo-escuro-footer);
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+        
+        .newsletter-form button:hover { background: #fff; }
+        .copyright { text-align: center; font-size: 0.8rem; color: #777; }
+
+        /* --- ANIMAÇÕES --- */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- MEDIA QUERIES --- */
+        @media (max-width: 900px) {
+            .footer-grid { grid-template-columns: 1fr; gap: 30px; text-align: center; }
+            .social-icons { justify-content: center; display: flex; }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            nav { display: none; }
+            .filters { gap: 10px; }
+            .filter-btn { font-size: 0.85rem; padding: 6px 15px; }
+            .about-section { flex-direction: column-reverse; padding: 3rem 5%; gap: 30px; }
+            .about-text h2 { text-align: center; }
+            .about-text { text-align: center; } /* Centraliza botão no mobile */
+            .about-img { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img class="logo" src="images/logo.png" alt="Logo">
+        <nav>
+            <ul>
+                <li><a href="#hero">Início</a></li>
+                <li><a href="#products">Produtos</a></li>
+                <li><a href="sobre.html">Sobre Nós</a></li> <li><a href="#footer">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="hero" class="hero">
+        <h1>Vinhos, Queijos & Memórias</h1>
+        <p>Uma curadoria especial de sabores para momentos inesquecíveis.</p>
+        <a href="#products" class="btn-cta">Ver Coleção</a>
+    </section>
+
+    <div class="filters">
+        <button class="filter-btn active" onclick="filterProducts('todos')">Todos</button>
+        <button class="filter-btn" onclick="filterProducts('vinhos')">Vinhos</button>
+        <button class="filter-btn" onclick="filterProducts('queijos')">Queijos</button>
+        <button class="filter-btn" onclick="filterProducts('geleias')">Geleias</button>
+    </div>
+
+    <section id="products" class="products-section">
+        <h2 class="section-title">Nossa Seleção</h2>
+        <div class="product-grid" id="productContainer">
+            </div>
+        
+        <div class="view-more-container">
+            <button id="btnViewMore" class="btn-view-more" onclick="toggleViewMore()">Ver Mais Produtos</button>
+        </div>
+    </section>
+
+    <section id="about" class="about-section">
+        <div class="about-text">
+            <h2>Tradição & Excelência</h2>
+            <p>
+                A <strong>Cave & Sabor</strong> nasceu da paixão por reunir pessoas em torno da boa mesa. Acreditamos que um bom vinho não é apenas uma bebida, mas uma história engarrafada esperando para ser contada.
+            </p>
+            <p>
+                Nossa curadoria viaja o mundo – e também valoriza o produtor local – para trazer até você queijos artesanais de textura perfeita, geleias com o equilíbrio exato de doçura e acidez, e vinhos que despertam os sentidos.
+            </p>
+            
+            <a href="sobre.html" class="btn-about-link">Conheça Nossa História</a>
+        </div>
+        <div class="about-img">
+            <a href="sobre.html"> <img src="https://images.unsplash.com/photo-1528823872057-9c0182e68453?q=80&w=800&auto=format&fit=crop" alt="Sobre nossa loja">
+            </a>
+        </div>
+    </section>
+
+    <footer id="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>Fontana & Família</h3>
+                <p>Queijos, vinhos e geleias artesanais desde 1987. Venha nos visitar e descubra sabores que contam histórias.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Visite-nos</h3>
+                <p><i class="fas fa-map-marker-alt" style="color: var(--dourado); margin-right: 10px;"></i> Rua Tuiuti, 1196 - Tatuapé, <br>São Paulo - SP, 03081-012</p>
+                <p><i class="fas fa-phone" style="color: var(--dourado); margin-right: 10px;"></i> (11) 3456-7890</p>
+                <p><i class="fas fa-clock" style="color: var(--dourado); margin-right: 10px;"></i> Seg - Sáb: 10h às 20h<br>Dom: 10h às 16h</p>
+            </div>
+        </div>
+        <p class="copyright">&copy; 2026 Cais. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        // --- DADOS DOS PRODUTOS ---
+        const products = [
+            {
+                id: 1, name: "Cabernet Sauvignon Reserva", category: "vinhos", price: 129.90,
+                desc: "Notas de frutas vermelhas e carvalho. Encorpado.",
+                img: "https://images.unsplash.com/photo-1559563362-c667ba5f5480?q=80&w=800&auto=format&fit=crop"
+            },
+            {
+                id: 2, name: "Queijo Brie Premium", category: "queijos", price: 45.00,
+                desc: "Cremoso, suave e perfeito para harmonizar com vinho branco.",
+                img: "https://images.unsplash.com/photo-1634487359989-3e9a72136199?q=80&w=800&auto=format&fit=crop"
+            },
+            {
+                id: 3, name: "Geleia de Pimenta", category: "geleias", price: 28.50,
+                desc: "Agridoce com picância leve. Ideal para carnes e queijos.",
+                img: "https://images.unsplash.com/photo-1620917289569-b52eb0354020?q=80&w=800&auto=format&fit=crop"
+            },
+            {
+                id: 4, name: "Pinot Noir Elegance", category: "vinhos", price: 189.00,
+                desc: "Elegante, leve e com aromas florais.",
+                img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?q=80&w=800&auto=format&fit=crop"
+            },
+            {
+                id: 5, name: "Gorgonzola Azul", category: "queijos", price: 52.00,
+                desc: "Sabor intenso e textura quebradiça. Um clássico.",
+                img: "https://images.unsplash.com/photo-1452195100483-d00f4d805146?q=80&w=800&auto=format&fit=crop"
+            },
+            {
+                id: 6, name: "Chardonnay Oak", category: "vinhos", price: 98.00,
+                desc: "Branco amanteigado com notas de baunilha.",
+                img: "https://images.unsplash.com/photo-1585553616435-2dc0a54e271d?q=80&w=800&auto=format&fit=crop"
+            },
+            {
+                id: 7, name: "Malbec Argentino", category: "vinhos", price: 145.00,
+                desc: "Taninos macios e final persistente.",
+                img: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=800&auto=format&fit=crop"
+            },
+            {
+                id: 8, name: "Queijo Parmesão Capa", category: "queijos", price: 65.00,
+                desc: "Maturação de 12 meses, cristais de sabor.",
+                img: "https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?q=80&w=800&auto=format&fit=crop"
+            }
+        ];
+
+        // --- VARIÁVEIS DE CONTROLE DE EXIBIÇÃO ---
+        const itemsToShowInitial = 3; 
+        let isExpanded = false; 
+        const container = document.getElementById('productContainer');
+        const btnViewMore = document.getElementById('btnViewMore');
+
+        // --- RENDERIZAÇÃO ---
+        function renderProducts(filter = 'todos') {
+            container.innerHTML = ''; 
+            isExpanded = false; 
+            updateButtonState(false); 
+
+            const filteredProducts = filter === 'todos' 
+                ? products 
+                : products.filter(p => p.category === filter);
+
+            if (filteredProducts.length <= itemsToShowInitial) {
+                btnViewMore.style.display = 'none';
+            } else {
+                btnViewMore.style.display = 'inline-block';
+            }
+
+            filteredProducts.forEach((product, index) => {
+                const msg = `Olá! Gostaria de encomendar o *${product.name}* que vi no site por R$ ${product.price.toFixed(2)}.`;
+                const whatsappLink = `https://wa.me/5511999999999?text=${encodeURIComponent(msg)}`;
+
+                const card = document.createElement('div');
+                card.classList.add('product-card');
+                
+                if (index >= itemsToShowInitial) {
+                    card.classList.add('hidden-card');
+                }
+
+                card.innerHTML = `
+                    <div style="overflow: hidden;">
+                        <img src="${product.img}" alt="${product.name}" class="card-img">
+                    </div>
+                    <div class="card-info">
+                        <span class="card-cat">${product.category}</span>
+                        <h3 class="card-title">${product.name}</h3>
+                        <p class="card-desc">${product.desc}</p>
+                        <span class="card-price">R$ ${product.price.toFixed(2).replace('.', ',')}</span>
+                        <a href="${whatsappLink}" target="_blank" class="btn-buy">Comprar via WhatsApp</a>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+            observeElements();
+        }
+
+        // --- LÓGICA VER MAIS / VER MENOS ---
+        function toggleViewMore() {
+            const hiddenCards = document.querySelectorAll('.hidden-card');
+            const allCards = document.querySelectorAll('.product-card');
+
+            if (!isExpanded) {
+                hiddenCards.forEach(card => {
+                    card.classList.remove('hidden-card'); 
+                    card.classList.add('fade-in-entry'); 
+                    card.classList.add('visible'); 
+                });
+                updateButtonState(true);
+            } else {
+                document.getElementById('products').scrollIntoView({behavior: 'smooth'});
+
+                setTimeout(() => {
+                    allCards.forEach((card, index) => {
+                        if (index >= itemsToShowInitial) {
+                            card.classList.add('hidden-card');
+                            card.classList.remove('fade-in-entry');
+                        }
+                    });
+                }, 500);
+                
+                updateButtonState(false);
+            }
+            isExpanded = !isExpanded;
+        }
+
+        function updateButtonState(expanded) {
+            if (expanded) {
+                btnViewMore.innerText = "Ver Menos";
+            } else {
+                btnViewMore.innerText = "Ver Mais Produtos";
+            }
+        }
+
+        // --- FILTRO ---
+        function filterProducts(category) {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.innerText.toLowerCase().includes(category) || (category === 'todos' && btn.innerText === 'Todos')) {
+                    btn.classList.add('active');
+                }
+            });
+            renderProducts(category);
+        }
+
+        // --- SCROLL REVEAL ---
+        function observeElements() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.product-card:not(.hidden-card)').forEach(el => observer.observe(el));
+        }
+
+        renderProducts();
+
+    </script>
+</body>
+</html>

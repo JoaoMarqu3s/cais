@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nossa História - Cave & Sabor (Fontana & Família)</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- REUTILIZANDO VARIÁVEIS DO INDEX PARA HARMONIA --- */
+        :root {
+            --bordo: #58181F;
+            --bordo-escuro-footer: #2c1e1c; /* Tom específico do footer do print */
+            --dourado: #D4AF37;
+            --preto: #121212;
+            --branco: #ffffff;
+            --bege-claro: #fcfbf9; /* Fundo da seção de valores */
+            --cinza-texto: #555;
+            --shadow: 0 15px 40px rgba(0,0,0,0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--branco);
+            color: var(--preto);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        img { max-width: 100%; display: block; }
+
+        /* --- HEADER (Idêntico ao Index) --- */
+        header {
+            background-color: var(--branco);
+            padding: 1rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            width: 3rem;
+            height: 3rem;
+            transform: scale(2);
+            object-fit: contain;
+        }
+        
+        /* Texto provisório de logo caso a imagem não carregue */
+    
+        nav ul { display: flex; gap: 20px; list-style: none; }
+        nav a:hover { color: var(--dourado); }
+
+        /* --- HERO SECTION (PARALLAX) --- */
+        .page-hero {
+            height: 60vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?q=80&w=2070&auto=format&fit=crop'); /* Imagem de vinhos */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--branco);
+            margin-top: 60px;
+        }
+
+        .page-hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: fadeUp 1s ease;
+        }
+
+        .page-hero p {
+            font-size: 1.2rem;
+            font-style: italic;
+            max-width: 700px;
+            animation: fadeUp 1.2s ease;
+        }
+
+        /* --- SEÇÃO HISTÓRIA (Texto + Imagem) --- */
+        .history-section {
+            padding: 6rem 10%;
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            background: var(--branco);
+        }
+
+        .history-img-wrapper {
+            flex: 1;
+            position: relative;
+        }
+
+        .history-img-wrapper img {
+            border-radius: 5px;
+            box-shadow: var(--shadow);
+        }
+
+        /* Selo de Anos */
+        .badge-years {
+            position: absolute;
+            bottom: -30px;
+            right: -30px;
+            background-color: var(--bordo);
+            color: var(--branco);
+            width: 100px;
+            height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Playfair Display';
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 2;
+        }
+        .badge-years span { font-size: 2rem; line-height: 1; font-weight: bold; }
+        .badge-years small { font-size: 0.8rem; text-transform: uppercase; font-family: 'Lato'; }
+
+        .history-text { flex: 1; }
+
+        .sub-heading {
+            color: var(--dourado);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .history-text h2 {
+            font-size: 3rem;
+            color: var(--bordo);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .history-text p {
+            color: var(--cinza-texto);
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        .highlight-text {
+            color: var(--dourado);
+            font-style: italic;
+            font-family: 'Playfair Display';
+            font-weight: bold;
+        }
+
+        /* --- CITAÇÃO (QUOTE) --- */
+        .quote-section {
+            /* background-color: var(--bordo);  <-- LINHA REMOVIDA */
+            
+            /* NOVAS LINHAS PARA A IMAGEM DE FUNDO */
+            background-image: url('images/banner-vinho.png');
+            background-size: cover;      /* Faz a imagem cobrir todo o espaço */
+            background-position: center; /* Centraliza a imagem */
+            background-repeat: no-repeat;/* Impede que a imagem se repita */
+            transform: scale(0.2);
+            
+            
+            padding: 5rem 10%;
+            text-align: center;
+            color: var(--branco); /* O texto permanece branco sobre a imagem */
+            position: relative;
+        }
+
+        .quote-icon {
+            font-size: 3rem;
+            color: rgba(212, 175, 55, 0.3); /* Dourado transparente */
+            margin-bottom: 1rem;
+        }
+
+        .quote-text {
+            font-family: 'Playfair Display';
+            font-size: 2rem;
+            font-style: italic;
+            max-width: 900px;
+            margin: 0 auto 2rem;
+            line-height: 1.4;
+        }
+
+        .quote-author {
+            color: var(--dourado);
+            font-size: 1.1rem;
+            font-weight: bold;
+            display: block;
+        }
+        
+        .quote-author::before {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 1px;
+            background: var(--dourado);
+            margin: 0 auto 15px;
+        }
+
+        /* --- VALORES (CARDS) --- */
+        .values-section {
+            background-color: var(--bege-claro);
+            padding: 6rem 5%;
+            text-align: center;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 3rem;
+        }
+
+        .value-card {
+            background: var(--branco);
+            padding: 3rem 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+
+        .value-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+        }
+
+        .value-icon {
+            font-size: 2rem;
+            color: var(--dourado);
+            margin-bottom: 1.5rem;
+            border: 1px solid #eee;
+            width: 70px;
+            height: 70px;
+            line-height: 70px;
+            margin: 0 auto 1.5rem;
+            display: block;
+        }
+
+        .value-card h3 { color: var(--bordo); margin-bottom: 1rem; font-size: 1.3rem; }
+        .value-card p { font-size: 0.95rem; color: #666; }
+
+        /* --- ESPECIALIDADES (3 Colunas) --- */
+        .specialties-section {
+            padding: 6rem 5%;
+            text-align: center;
+        }
+
+        .spec-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 3rem;
+        }
+
+        .spec-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+            transition: 0.5s;
+        }
+        
+        .spec-item:hover img { filter: brightness(0.9); }
+
+        .spec-item h3 {
+            font-size: 1.8rem;
+            color: var(--bordo);
+            margin-bottom: 0.5rem;
+        }
+        
+        .spec-item span {
+            display: block;
+            color: var(--dourado);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .spec-item p { font-size: 0.95rem; color: #666; max-width: 300px; margin: 0 auto; }
+
+        /* --- FOOTER (Estilo Dark) --- */
+        footer {
+            background-color: var(--bordo-escuro-footer);
+            color: #ddd;
+            padding: 4rem 5% 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1.5fr; /* 3 Colunas como no print */
+            gap: 50px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-col h3 {
+            color: var(--dourado);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .footer-col p { margin-bottom: 10px; font-size: 0.95rem; }
+
+        .social-icons a {
+            color: var(--dourado);
+            border: 1px solid var(--dourado);
+            width: 40px; 
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+        
+        .social-icons a:hover { background: var(--dourado); color: var(--bordo-escuro-footer); }
+
+        .newsletter-form input {
+            width: 100%;
+            padding: 12px;
+            background: transparent;
+            border: 1px solid #555;
+            color: #fff;
+            margin-bottom: 10px;
+            font-family: 'Lato';
+        }
+
+        .newsletter-form button {
+            width: 100%;
+            padding: 12px;
+            background: var(--dourado);
+            border: none;
+            color: var(--bordo-escuro-footer);
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+        
+        .newsletter-form button:hover { background: #fff; }
+
+        .copyright { text-align: center; font-size: 0.8rem; color: #777; }
+
+        /* --- ANIMAÇÕES --- */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 1s ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* --- MEDIA QUERIES --- */
+        @media (max-width: 900px) {
+            .history-section { flex-direction: column; padding: 4rem 5%; }
+            .badge-years { right: 10px; width: 80px; height: 80px; }
+            .badge-years span { font-size: 1.5rem; }
+            .footer-grid { grid-template-columns: 1fr; gap: 30px; text-align: center; }
+            .social-icons { justify-content: center; display: flex; }
+        }
+        
+        @media (max-width: 768px) {
+            nav { display: none; } /* Em produção usaria menu hamburger */
+            .page-hero h1 { font-size: 2.5rem; }
+            .quote-text { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img class="logo" src="images/logo.png" alt="">
+        <nav>
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="index.html#products">Produtos</a></li>
+                <li><a href="sobre.html" style="color: var(--dourado);">Sobre Nós</a></li>
+                <li><a href="#footer">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="page-hero">
+        <span class="sub-heading" style="color: white; margin-bottom: 0;">Desde 2020</span>
+        <h1>Nossa História</h1>
+        <p>Uma tradição dedicada a compartilhar os melhores queijos, selecionar vinhos excepcionais e preservar geleias artesanais.</p>
+    </section>
+
+    <section class="history-section reveal">
+        <div class="history-img-wrapper">
+            <img src="images/queijo.png"  alt="Queijo Artesanal">
+            <div class="badge-years">
+                <span>6</span>
+                <small>Anos</small>
+            </div>
+        </div>
+        <div class="history-text">
+            <span class="sub-heading">Quem Somos</span>
+            <h2>A Arte de <br><i>Saber Escolher</i></h2>
+            <p>
+                O cais nasceu da paixão de <strong>Ricardo Almeida</strong>, amante da gastronomia que sonhava em trazer todo o sabor autêntico do Brasil para um só lugar.
+            </p>
+            <p>
+                Em 2020, abrimos nossa loja no Tatuapé - São Paulo. Com apenas três rodas de queijo importadas e uma dúzia de garrafas de vinho, começamos uma jornada de transformar paladares.
+            </p>
+            <p>
+                Hoje, continuamos honrando essa tradição. Cada queijo que selecionamos, cada vinho que recomendamos e cada geleia carregam a essência do que acreditamos: <span class="highlight-text">o verdadeiro luxo está na simplicidade do que é autêntico.</span>
+            </p>
+        </div>
+    </section>
+
+    <section class="values-section reveal">
+        <span class="sub-heading">Nossos Valores</span>
+        <h2 style="color: var(--bordo); margin-bottom: 2rem;">O Que Nos Move</h2>
+        
+        <div class="values-grid">
+            <div class="value-card">
+                <div class="value-icon"><i class="fas fa-grapes"></i></div>
+                <h3>Seleção Rigorosa</h3>
+                <p>Visitamos pessoalmente cada produtor. Conhecemos a terra, o clima e as mãos que criam.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon"><i class="fas fa-heart"></i></div>
+                <h3>Paixão Genuína</h3>
+                <p>Amamos o que fazemos. Cada cliente que entra é recebido como um amigo que veio compartilhar a mesa.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon"><i class="fas fa-leaf"></i></div>
+                <h3>Sustentabilidade</h3>
+                <p>Trabalhamos com produtores que respeitam a terra, garantindo que as próximas gerações também desfrutem.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon"><i class="fas fa-certificate"></i></div>
+                <h3>Tradição & Inovação</h3>
+                <p>Honramos as técnicas centenárias enquanto abraçamos novas descobertas gastronômicas.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="quote-section reveal">
+        <i class="fas fa-quote-left quote-icon"></i>
+        <div class="quote-text">
+            "Um bom queijo, um vinho honesto e uma geleia feita com amor — esses são os ingredientes de uma vida bem vivida."
+        </div>
+        <span class="quote-author">Maria Helena Fontana</span>
+        <small style="color: #ccc;">Fundadora, 1987</small>
+    </section>
+
+    <section class="specialties-section reveal">
+        <span class="sub-heading">Nossas Especialidades</span>
+        <h2 style="color: var(--bordo);">Tesouros Artesanais</h2>
+        <p style="color: #666; margin-top: 10px;">Cada produto em nossa loja conta uma história de dedicação.</p>
+
+        <div class="spec-grid">
+            <div class="spec-item">
+                <span>Maturados com Tempo</span>
+                <img src="https://images.unsplash.com/photo-1624806992066-5ffcf7ca186b?q=80&w=800&auto=format&fit=crop" alt="Queijos">
+                <h3>Queijos</h3>
+                <p>Dos suaves Brie franceses aos intensos Pecorinos italianos, nossa cave abriga variedades selecionadas.</p>
+            </div>
+            <div class="spec-item">
+                <span>Safras Excepcionais</span>
+                <img src="https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?q=80&w=800&auto=format&fit=crop" alt="Vinhos">
+                <h3>Vinhos</h3>
+                <p>Rótulos cuidadosamente escolhidos de vinícolas familiares da Europa e do Novo Mundo.</p>
+            </div>
+            <div class="spec-item">
+                <span>Feitas à Mão</span>
+                <img src="images/geleias.png" alt="Geleias">
+                <h3>Geleias</h3>
+                <p>Receitas de família preservadas há gerações, com frutas da estação colhidas no ponto perfeito.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer id="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>Cais</h3>
+                <p>Queijos, vinhos e geleias artesanais desde 2020. Venha nos visitar e descubra sabores que contam histórias.</p>
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/cais.2020/"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Visite-nos</h3>
+                <p><i class="fas fa-map-marker-alt" style="color: var(--dourado); margin-right: 10px;"></i> Rua Tuiuti, 1196 - Tatuapé, <br>São Paulo - SP, 03081-012</p>
+                <p><i class="fas fa-phone" style="color: var(--dourado); margin-right: 10px;"></i> (11) 3456-7890</p>
+                <p><i class="fas fa-clock" style="color: var(--dourado); margin-right: 10px;"></i> Seg - Sáb: 10h às 20h<br>Dom: 10h às 16h</p>
+            </div>
+        </div>
+        <p class="copyright">&copy; 2026 Cais. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        // Animação de Scroll (Scroll Reveal) simples
+        window.addEventListener('scroll', reveal);
+
+        function reveal(){
+            var reveals = document.querySelectorAll('.reveal');
+
+            for(var i = 0; i < reveals.length; i++){
+                var windowheight = window.innerHeight;
+                var revealtop = reveals[i].getBoundingClientRect().top;
+                var revealpoint = 150;
+
+                if(revealtop < windowheight - revealpoint){
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+        // Ativar na carga inicial
+        reveal();
+    </script>
+</body>
+</html>
